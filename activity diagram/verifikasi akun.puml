@@ -16,7 +16,7 @@ start
 if (Validasi Login Valid?) then (Tidak)
     |Admin|
     :Tampilkan Notifikasi\n"Login gagal";
-    stop
+    kill
 else (Ya)
     |System|
     :Tampilkan Dashboard Admin;

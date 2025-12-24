@@ -1,7 +1,7 @@
 @startuml
 !pragma useVerticalIf on
 
-title Kelola Data Wilayah & Distribusi
+title Lihat Statistik Harga Ayam per Wilayah
 
 |Admin|
 start
@@ -25,26 +25,24 @@ else (Ya)
 endif
 
 |Admin|
-:Buka Menu Wilayah;
+:Buka Menu Statistik;
 
 |System|
-:Tampilkan Data Wilayah;
+:Tampilkan Pilihan Wilayah;
 
 |Admin|
-:Tambah/Ubah Data Wilayah;
-:Klik Tombol Simpan;
+:Pilih Wilayah;
 
 |System|
-if (Data Valid?) then (Tidak)
+if (Wilayah tersedia?) then (Tidak)
     |Admin|
-    :Tampilkan Notifikasi\n"Data tidak valid";
+    :Tampilkan Notifikasi\n"Data wilayah \ntidak ditemukan";
     kill
 else (Ya)
     |System|
-    :Perbarui Data Wilayah;
-    :Simpan ke Database;
+    :Tampilkan Grafik Harga;
     |Admin|
-    :Tampilkan Notifikasi\n"Data wilayah berhasil disimpan";
+    :Visualisasi grafik harga;
     stop
 endif
 
