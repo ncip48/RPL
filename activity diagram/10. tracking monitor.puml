@@ -1,0 +1,48 @@
+@startuml
+!pragma useVerticalIf on
+
+title Tracking & Monitoring Status Distribusi Ayam
+
+|Admin/All Actor|
+start
+:Membuka Halaman Login;
+
+|System|
+:Menampilkan Login Form;
+
+|Admin/All Actor|
+:Mengisikan Username & Password;
+:Klik Tombol Login;
+
+|System|
+if (Validasi Login Valid?) then (Tidak)
+    |Admin/All Actor|
+    :Tampilkan Notifikasi\n"Login gagal";
+    kill
+else (Ya)
+    |System|
+    :Tampilkan Dashboard;
+endif
+
+|Admin/All Actor|
+:Buka Menu Tracking;
+
+|System|
+:Tampilkan Status Pengiriman;
+
+|Buyer|
+:Buyer mengonfirmasi\npenerimaan barang;
+
+|System|
+if (Data pengiriman ter-update?) then (Tidak)
+    |Admin/All Actor|
+    :Tampilkan Status Terakhir\n"Data belum update";
+    kill
+else (Ya)
+    |System|
+    :Perbarui Status Transaksi;
+    |Admin/All Actor|
+    :Tampilkan Notifikasi\n"Status distribusi berhasil diperbarui";
+    stop
+endif
+@enduml
