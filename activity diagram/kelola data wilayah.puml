@@ -1,0 +1,51 @@
+@startuml
+!pragma useVerticalIf on
+
+title Kelola Data Wilayah & Distribusi
+
+|Admin|
+start
+:Membuka Halaman Login;
+
+|System|
+:Menampilkan Login Form;
+
+|Admin|
+:Mengisikan Username & Password;
+:Klik Tombol Login;
+
+|System|
+if (Validasi Login Valid?) then (Tidak)
+    |Admin|
+    :Tampilkan Notifikasi\n"Login gagal";
+    stop
+else (Ya)
+    |System|
+    :Tampilkan Dashboard Admin;
+endif
+
+|Admin|
+:Buka Menu Wilayah;
+
+|System|
+:Tampilkan Data Wilayah;
+
+|Admin|
+:Tambah/Ubah Data Wilayah;
+:Klik Tombol Simpan;
+
+|System|
+if (Data Valid?) then (Tidak)
+    |Admin|
+    :Tampilkan Notifikasi\n"Data tidak valid";
+    stop
+else (Ya)
+    |System|
+    :Perbarui Data Wilayah;
+    :Simpan ke Database;
+    |Admin|
+    :Tampilkan Notifikasi\n"Data wilayah berhasil disimpan";
+    stop
+endif
+
+@enduml
