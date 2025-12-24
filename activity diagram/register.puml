@@ -1,0 +1,25 @@
+@startuml
+title Registrasi Akun
+
+|User|
+start
+:Buka Halaman Registrasi;
+
+|System|
+:Tampilkan Form Registrasi;
+
+|User|
+:Isi Data Registrasi;
+:Upload Dokumen Legalitas;
+:Klik Tombol Daftar;
+
+|System|
+:Validasi Data Registrasi;
+:Validasi Dokumen;
+:Cek Email Terdaftar;
+:Simpan Data Akun;
+:Set Status\n"Menunggu Verifikasi";
+:Kirim Notifikasi ke Admin;
+
+stop
+@enduml
