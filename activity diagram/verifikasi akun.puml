@@ -1,0 +1,27 @@
+@startuml
+title Verifikasi Akun & Legalitas
+
+|Admin|
+start
+:Login ke Sistem;
+
+|System|
+:Validasi Data Login;
+:Tampilkan Dashboard Admin;
+
+|Admin|
+:Buka Daftar Akun\nBelum Terverifikasi;
+
+|System|
+:Tampilkan Data Akun\ndan Dokumen Legalitas;
+
+|Admin|
+:Meninjau Dokumen Legalitas;
+:Memilih Aksi\n(Verifikasi / Tolak);
+
+|System|
+:Perbarui Status Akun;
+:Simpan Catatan Verifikasi;
+
+stop
+@enduml
