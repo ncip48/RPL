@@ -21,5 +21,8 @@ start
 :Set Status\n"Menunggu Verifikasi";
 :Kirim Notifikasi ke Admin;
 
+|User|
+:Notifikasi registrasi;
+
 stop
 @enduml

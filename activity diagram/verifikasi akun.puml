@@ -3,11 +3,23 @@ title Verifikasi Akun & Legalitas
 
 |Admin|
 start
-:Login ke Sistem;
+:Membuka Halaman Login;
 
 |System|
-:Validasi Data Login;
-:Tampilkan Dashboard Admin;
+:Menampilkan Login Form;
+
+|Admin|
+:Mengisikan Username & Password;
+:Klik Tombol Login;
+
+|System|
+if (Validasi Login Valid?) then (Ya)
+    :Tampilkan Dashboard Admin;
+else (Tidak)
+    |Admin|
+    :Tampilkan Notifikasi\n"Login gagal";
+    stop
+endif
 
 |Admin|
 :Buka Daftar Akun\nBelum Terverifikasi;
@@ -22,6 +34,9 @@ start
 |System|
 :Perbarui Status Akun;
 :Simpan Catatan Verifikasi;
+
+|Admin|
+:Tampilkan Notifikasi\n"Akun telah diupdate";
 
 stop
 @enduml
