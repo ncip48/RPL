@@ -13,12 +13,13 @@ start
 :Klik Tombol Login;
 
 |System|
-if (Validasi Login Valid?) then (Ya)
-    :Tampilkan Dashboard Admin;
-else (Tidak)
+if (Validasi Login Valid?) then (Tidak)
     |Admin|
     :Tampilkan Notifikasi\n"Login gagal";
     stop
+else (Ya)
+    |System|
+    :Tampilkan Dashboard Admin;
 endif
 
 |Admin|
