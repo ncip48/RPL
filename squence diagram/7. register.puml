@@ -1,0 +1,50 @@
+@startuml
+title Sequence Diagram: Registrasi Akun
+autonumber
+
+actor "User" as User
+boundary "Registration Page" as UI_Reg
+control "Registration Controller" as RegCtrl
+entity "Database" as DB
+control "Notification Service" as NotifSvc
+
+'--- Rendering Page ---
+User -> UI_Reg : Buka Halaman Registrasi
+UI_Reg --> User : Tampilkan Form Registrasi
+
+'--- Submission Phase ---
+User -> UI_Reg : Isi Data Registrasi
+User -> UI_Reg : Upload Dokumen Legalitas
+User -> UI_Reg : Klik Tombol Daftar
+
+UI_Reg -> RegCtrl : SubmitRegistration(Data, Docs)
+
+'--- Validation Phase ---
+activate RegCtrl
+RegCtrl -> RegCtrl : Validasi Format Data & Dokumen
+
+RegCtrl -> DB : CheckEmailAvailability(email)
+alt Email Sudah Terdaftar
+    DB --> RegCtrl : Exists
+    RegCtrl --> UI_Reg : Return Error "Email Taken"
+    UI_Reg --> User : Tampilkan Error
+else Email Tersedia
+    DB --> RegCtrl : Available
+    
+    '--- Saving Data ---
+    RegCtrl -> DB : SaveAccount(Data, Status="Menunggu Verifikasi")
+    DB --> RegCtrl : Success
+    
+    RegCtrl -> DB : SaveDocuments(Docs)
+    DB --> RegCtrl : Success
+
+    '--- Notification ---
+    RegCtrl -> NotifSvc : SendNotificationToAdmin("New User Registered")
+    
+    RegCtrl --> UI_Reg : Registration Success
+    deactivate RegCtrl
+    
+    UI_Reg --> User : Tampilkan Notifikasi "Registrasi Berhasil"
+end
+
+@enduml

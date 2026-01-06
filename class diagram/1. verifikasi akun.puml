@@ -1,0 +1,54 @@
+@startuml
+title Class Diagram: Sistem Verifikasi
+
+class Admin {
+    - int adminId
+    - string username
+    - string password
+    + bool login()
+    + void reviewDocument()
+    + void verifyAccount(int accountId)
+    + void rejectAccount(int accountId)
+}
+
+class Account {
+    - int accountId
+    - string companyName
+    - string email
+    - AccountStatus status
+    - Date registeredDate
+    + void updateStatus(AccountStatus newStatus)
+}
+
+enum AccountStatus {
+    UNVERIFIED
+    VERIFIED
+    REJECTED
+}
+
+class LegalDocument {
+    - int docId
+    - int accountId
+    - string docType
+    - string fileUrl
+    - Date uploadDate
+    + bool isValid()
+}
+
+class VerificationLog {
+    - int logId
+    - int adminId
+    - int accountId
+    - string actionTaken
+    - Date timestamp
+    + void saveLog()
+}
+
+'--- Relationships ---
+
+Admin "1" ..> "0..*" Account : Manages >
+Account "1" *-- "1..*" LegalDocument : Contains >
+Admin "1" --> "0..*" VerificationLog : Creates >
+Account "1" <.. "0..*" VerificationLog : References >
+
+@enduml

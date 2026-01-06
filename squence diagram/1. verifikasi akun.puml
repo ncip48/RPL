@@ -1,0 +1,58 @@
+@startuml
+title Sequence Diagram: Verifikasi Akun & Legalitas
+autonumber
+
+actor "Admin" as User
+boundary "Login Page" as UI_Login
+boundary "Dashboard Admin" as UI_Dash
+control "Auth Controller" as AuthCtrl
+control "Verification Controller" as VerifCtrl
+entity "Database" as DB
+
+'--- Login Phase ---
+group Login Process
+    User -> UI_Login : Membuka Halaman Login
+    UI_Login --> User : Menampilkan Login Form
+
+    User -> UI_Login : Input Username & Password
+    User -> UI_Login : Klik Tombol Login
+    UI_Login -> AuthCtrl : Request Validasi(User, Pass)
+    AuthCtrl -> DB : Check Credentials()
+    
+    alt Validasi Login Valid? (TIDAK)
+        DB --> AuthCtrl : Invalid
+        AuthCtrl --> UI_Login : Return Error
+        UI_Login --> User : Tampilkan Notifikasi "Login Gagal"
+    else YA
+        DB --> AuthCtrl : Valid
+        AuthCtrl --> UI_Dash : Redirect to Dashboard
+        UI_Dash --> User : Tampilkan Dashboard Admin
+    end
+end
+
+'--- Verification Phase ---
+group Verification Process
+    User -> UI_Dash : Buka Daftar Akun Belum Terverifikasi
+    UI_Dash -> VerifCtrl : GetUnverifiedAccounts()
+    VerifCtrl -> DB : Query(Status='Pending')
+    DB --> VerifCtrl : Return Data List & Docs
+    VerifCtrl --> UI_Dash : Tampilkan Data Akun & Dokumen
+    
+    User -> UI_Dash : Meninjau Dokumen Legalitas
+    
+    alt Aksi: Verifikasi atau Tolak
+        User -> UI_Dash : Klik Verifikasi / Tolak
+        UI_Dash -> VerifCtrl : SubmitDecision(AccountID, Status)
+        
+        par Parallel Processing
+            VerifCtrl -> DB : UpdateAccountStatus()
+            VerifCtrl -> DB : SaveVerificationLog()
+        end
+        
+        DB --> VerifCtrl : Success
+        VerifCtrl --> UI_Dash : Return Success Message
+        UI_Dash --> User : Tampilkan Notifikasi "Akun telah diupdate"
+    end
+end
+
+@enduml

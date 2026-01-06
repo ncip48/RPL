@@ -1,0 +1,48 @@
+@startuml
+title Class Diagram: Sistem Registrasi
+
+class UserCandidate {
+    - int userId
+    - string fullName
+    - string companyName
+    - string email
+    - string password
+    - string phoneNumber
+    - RegistrationStatus status
+    + void register()
+    + void uploadDocument(File doc)
+}
+
+enum RegistrationStatus {
+    DRAFT
+    WAITING_VERIFICATION
+    ACTIVE
+}
+
+class LegalDocument {
+    - int docId
+    - int userId
+    - string fileName
+    - string fileType
+    - string storagePath
+    + bool validateFormat()
+}
+
+class RegistrationController {
+    + bool validateData(UserCandidate data)
+    + bool checkEmailExists(string email)
+    + void createAccount(UserCandidate data)
+    + void notifyAdmin(int userId)
+}
+
+class NotificationService {
+    + void sendAlert(string message, Role recipient)
+}
+
+'--- Relationships ---
+
+UserCandidate "1" *-- "1..*" LegalDocument : Uploads >
+RegistrationController ..> UserCandidate : Processes >
+RegistrationController ..> NotificationService : Triggers >
+
+@enduml
